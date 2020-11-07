@@ -11,6 +11,8 @@ def main():
     resolved_ips = parser.getResolvedIps()
     if args.output:
         outfile = open(args.output, 'a')
+    else:
+        outfile = False
     
     try:
         if(isinstance(resolved_ips, list)):
@@ -34,7 +36,8 @@ def main():
         print('\n\n===============================================================\n\n')
         print('[+]  Trace Completed Successfully!')
     finally:
-        outfile.close()
+        if outfile:
+            outfile.close()
 
 def printResults(ip, verbose, accurate, output):
     if accurate:
@@ -48,14 +51,16 @@ def printResults(ip, verbose, accurate, output):
 
     print('\n\n===============================================================\n\n')
     print('[*] Tracing {0}'.format(ip))
-    output.write('================================================================\n\n')
-    output.write('  Tracing {0}\n\n'.format(ip))
+    if output:
+        output.write('================================================================\n\n')
+        output.write('  Tracing {0}\n\n'.format(ip))
     print('\n[*] Trace')
     
     genkeys=data.keys()
     for key in genkeys:
         print('[*] {0}  :   {1}'.format(key, data[key]))
-        output.write('{0}   :   {1}\n'.format(key, data[key]))
+        if output:
+            output.write('{0}   :   {1}\n'.format(key, data[key]))
 
 
 if __name__ == "__main__":
