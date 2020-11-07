@@ -77,7 +77,7 @@ At least one of the -l or -i option must be declared!
 
 Usage Example:
 ```bash
-python3 iptrace.py -i [your-ip] 
+python3 iptrace.py -i [your ip or domain name] 
 ```
 
 You can also pass in a list of ips like so:
