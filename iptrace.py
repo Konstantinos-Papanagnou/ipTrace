@@ -3,6 +3,7 @@ import ArgumentParser
 import ResponseParser
 import webbrowser
 import sys
+import visualcreator
 
 def main():
     args = ArgumentParser.ArgumentParser()
@@ -15,15 +16,28 @@ def main():
         outfile = False
     
     try:
+        
         if(isinstance(resolved_ips, list)):
         
             if not resolved_ips:
                 sys.stderr.write('[-] Could not resolve any ips... Exiting...\n\n')
                 exit()
-
+            ipsTraced = []
+            locations = []
+            lattitudes = []
+            longtitudes = []
+            orgs = []
             print('\n\n[*] Resolved Ips: {0}'.format(len(resolved_ips)))
             for ip in resolved_ips:
-                printResults(ip, args.verbosity, args.accurate, outfile)
+                loc, lat, lon, org = printResults(ip, args.verbosity, args.accurate, outfile)
+                if args.visual:
+                    ipsTraced.append(ip)
+                    locations.append(loc)
+                    lattitudes.append(lat)
+                    longtitudes.append(lon)
+                    orgs.append(org)
+            if args.visual:
+                visualcreator.create(ipsTraced, locations, lattitudes, longtitudes, orgs)
 
         else:
             if not resolved_ips:
@@ -31,7 +45,9 @@ def main():
                 exit()
 
             print('\n\nResolved Ip: {0}'.format(resolved_ips))
-            printResults(resolved_ips, args.verbosity, args.accurate, outfile)
+            loc, lat, lon, org = printResults(resolved_ips, args.verbosity, args.accurate, outfile)
+            if args.visual:
+                visualcreator.create(resolved_ips, loc, lat, lon, org)
 
         print('\n\n===============================================================\n\n')
         print('[+]  Trace Completed Successfully!')
@@ -61,6 +77,11 @@ def printResults(ip, verbose, accurate, output):
         print('[*] {0}  :   {1}'.format(key, data[key]))
         if output:
             output.write('{0}   :   {1}\n'.format(key, data[key]))
+            
+    if 'org' in data.keys():
+        return data['city'], data['lat'], data['lon'], data['org']
+    else: 
+        return data['city'], data['lat'], data['lon'], 'Unknown'
 
 
 if __name__ == "__main__":

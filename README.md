@@ -54,25 +54,26 @@ Everything is set! Now you can fire up the script.
              IP TRACE BY KONSTANTINOS PAP                
          POWERED BY ip-api & whatismyipaddress.com       
 =========================================================
-usage: iptrace.py [-h] [-v] [-a] [-o outputfile] (-l inputfile)/(-i ipaddr)
+usage: iptrace.py [-h] [-v] [-a] [--visual] [-o outputfile] (-l inputfile)/(-i ipaddr)
 
 Automation script for ip lookup
-                                                                                                                                    
-optional arguments:                                                                                                                 
-  -h, --help            show this help message and exit                                                                             
-  -i INPUT, --input INPUT                                                                                                           
-                        The ip address or domain name to examine                                                                    
-  -v, --verbose         Increase output verbosity                                                                                   
-  -l LISTINPUT, --listinput LISTINPUT                                                                                               
-                        Input a list of addresses and/or domain names from an external file. The file must contain one ip address   
-                        or domain name per line                                                                                     
-  -o OUTPUT, --output OUTPUT                                                                                                        
-                        Output file to export data                                                                                  
-  -a, --accurate        The ip-api is not very accurate on it's geolocation traces so use the -a option to get more accurate        
-                        results from whatismyipaddress.com. whatismyipaddress strictly does not allow webscraping to their website  
-                        so you will be prompted there automatically when using this option.                                         
-                                                                                                                                    
-At least one of the -l or -i option must be declared!  
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i INPUT, --input INPUT
+                        The ip address or domain name to examine
+  -v, --verbose         Increase output verbosity
+  -l LISTINPUT, --listinput LISTINPUT
+                        Input a list of addresses and/or domain names from an external file. The file must contain one ip address or domain name per line
+  -o OUTPUT, --output OUTPUT
+                        Output file to export data
+  -a, --accurate        The ip-api is not very accurate on it's geolocation traces so use the -a option to get more accurate results 
+                        from whatismyipaddress.com. whatismyipaddress strictly
+                        does not allow webscraping to their website so you will be prompted there automatically when using this option.
+  -V, --visual          Create Visual Map (Make a htmloutput.html file in the current directory and display it on firefox)
+
+At least one of the -l or -i option must be declared!
+
 ```
 
 Usage Example:
@@ -96,3 +97,14 @@ whatismyipaddress.com does not allow webscraping to their results so instead of 
 ```bash
 python3 iptrace.py -l input.txt -a
 ```
+
+# New Feature!
+####  You are now able to use --visual mode to create a Visual Map. This will create and open a htmloutput.html file that will contain all the ips that were successfully traced!
+####  You can't use the -a option with --visual!
+```bash
+python3 iptrace.py -l input.txt --visual
+```
+
+## Map Example (Note that this can pin point multiple ips from a list)
+
+![](Map.png)

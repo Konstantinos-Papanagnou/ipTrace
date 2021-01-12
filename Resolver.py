@@ -6,11 +6,15 @@ class Resolver:
     def __init__(self, ipaddr, verbose):
         self.ipaddr = []
         if isinstance(ipaddr, list):
+            ipaddr = self.removeDuplicates(ipaddr)
             for ip in ipaddr:
                 self.resolve(ip, verbose, True)
         else:  # if its not a list
             self.resolve(ipaddr, verbose, False)
-
+    
+    
+    def removeDuplicates(self, x):
+        return list(dict.fromkeys(x))
 
     def resolve(self, ip, verbose, append=True):
         if self.isDomain(ip):
