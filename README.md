@@ -25,6 +25,8 @@ pip3 install argparse
 pip3 install requests
 ```
 
+If you want to include it in your path you can run `chmod +x setup.sh` and `sudo ./setup.sh`
+
 Everything is set! Now you can fire up the script
 
 ### Windows

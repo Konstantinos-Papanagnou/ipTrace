@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import Resolver
 import ArgumentParser
 import ResponseParser
