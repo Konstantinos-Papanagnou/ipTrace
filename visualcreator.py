@@ -1,6 +1,9 @@
 import os
+import sys
+from http.server import HTTPServer, SimpleHTTPRequestHandler
 
-def create(ips, locations, lattitudes, longtitudes, orgs):
+
+def create(ips, locations, lattitudes, longtitudes, orgs, outfile, mobileSupport):
     if not ips:
         print("[-]  No Ips detected. Exiting...")
         exit()
@@ -18,14 +21,23 @@ def create(ips, locations, lattitudes, longtitudes, orgs):
         print("[-]  Variable types are not matching")
         exit()
 
-    with open('htmlTemplate', 'r') as html:
-        output = open('htmloutput.html', 'w')
+    htmlpath = os.path.realpath(__file__).split('/')[:-1]
+    htmlpath = '/'.join(htmlpath)
+    htmlpath += '/htmlTemplate'
+
+    with open(htmlpath, 'r') as html:
         htmltemplate = html.read()
         htmltemplate = htmltemplate.replace('%LOCATIONS%',htmloutput)
-        output.write(htmltemplate)
-        output.close()
+        outfile.write(htmltemplate)
+        outfile.close()
        
-    os.system("firefox htmloutput.html")
+    if mobileSupport:
+        # Open a simple http server and trigger it to open the url on the default browser.
+        httpd = HTTPServer(('localhost', 8000), SimpleHTTPRequestHandler)
+        os.system(f'xdg-open http://localhost:8000/{outfile.name}')
+        httpd.serve_forever()
+    else:
+        os.system(f"firefox {outfile.name}")
 
 
 def ParseGeoTrace(ip, location, lattitude, longtitude, org, appendComma=False, marker=1):
@@ -45,7 +57,3 @@ def ParseGeoTraces(ips, locations, lattitudes, longtitudes, orgs):
     inside = inside[:-1]
     skeleton = "var locations = [{0}];".format(inside)
     return skeleton
-
-#create(['192.168.1.58', '10.10.10.10'],["location1", "Home"],[10,20],[10,30],["Pap Industries", "Software Devs"])
-
-
