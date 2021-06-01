@@ -1,5 +1,6 @@
 import sys
 import argparse
+from bannermagic import printBannerPadding, printMessage
 
 class ArgumentParser:
 
@@ -26,12 +27,13 @@ class ArgumentParser:
                 content = [x.strip() for x in content] 
             self.ipaddr = content
         self.output = args.output
+        self.mobile = args.mobile
 
     def printBanner(self):
-        print("=========================================================")
-        print("             IP TRACE BY KONSTANTINOS PAP                ")
-        print("         POWERED BY ip-api & whatismyipaddress.com       ")
-        print("=========================================================")
+        printBannerPadding('*')
+        printMessage('IP TRACE BY KONSTANTINOS PAP')
+        printMessage('POWERED BY ip-api & whatismyipaddress.com')
+        printBannerPadding('*')
 
 
     def ConfigureParser(self):
@@ -39,8 +41,9 @@ class ArgumentParser:
         parser.add_argument('-i', '--input', help='The ip address or domain name to examine')
         parser.add_argument('-v', '--verbose', action='store_true', help='Increase output verbosity')
         parser.add_argument('-l', '--listinput', help='Input a list of addresses and/or domain names from an external file. The file must contain one ip address or domain name per line')
-        parser.add_argument('-o', '--output', help='Output file to export data')
+        parser.add_argument('-o', '--output', type=argparse.FileType('w'), help='Output file to export data')
         parser.add_argument('-a', '--accurate', action='store_true',  help="The ip-api is not very accurate on it's geolocation traces so use the -a option to get more accurate results from whatismyipaddress.com. whatismyipaddress strictly does not allow webscraping to their website so you will be prompted there automatically when using this option.")
-        parser.add_argument('-V', '--visual', action='store_true', help='Create Visual Map (Make a htmloutput.html file in the current directory and display it on firefox)')
+        parser.add_argument('-V', '--visual', type=argparse.FileType('w'), help='Create Visual Map (Make a htmloutput.html file in the current directory and display it on firefox)')
+        parser.add_argument('-m', '--mobile', action='store_true', help='Using Termux for android support')
         return parser
 

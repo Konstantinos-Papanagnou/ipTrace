@@ -13,7 +13,7 @@ def main():
 
     resolved_ips = parser.getResolvedIps()
     if args.output:
-        outfile = open(args.output, 'a')
+        outfile = args.output
     else:
         outfile = False
     
@@ -39,7 +39,7 @@ def main():
                     longtitudes.append(lon)
                     orgs.append(org)
             if args.visual:
-                visualcreator.create(ipsTraced, locations, lattitudes, longtitudes, orgs)
+                visualcreator.create(ipsTraced, locations, lattitudes, longtitudes, orgs, args.visual, args.mobile)
 
         else:
             if not resolved_ips:
@@ -49,7 +49,7 @@ def main():
             print('\n\nResolved Ip: {0}'.format(resolved_ips))
             loc, lat, lon, org = printResults(resolved_ips, args.verbosity, args.accurate, outfile)
             if args.visual:
-                visualcreator.create(resolved_ips, loc, lat, lon, org)
+                visualcreator.create(resolved_ips, loc, lat, lon, org, args.visual, args.mobile)
 
         print('\n\n===============================================================\n\n')
         print('[+]  Trace Completed Successfully!')
