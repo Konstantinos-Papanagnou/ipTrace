@@ -6,6 +6,7 @@ import ResponseParser
 import webbrowser
 import sys
 import visualcreator
+from bannermagic import printBannerPadding
 
 def main():
     args = ArgumentParser.ArgumentParser()
@@ -51,7 +52,9 @@ def main():
             if args.visual:
                 visualcreator.create(resolved_ips, loc, lat, lon, org, args.visual, args.mobile)
 
-        print('\n\n===============================================================\n\n')
+        print('\n\n')
+        printBannerPadding()
+        print('\n\n')
         print('[+]  Trace Completed Successfully!')
     finally:
         if outfile:
@@ -67,7 +70,9 @@ def printResults(ip, verbose, accurate, output):
     rp = ResponseParser.ResponseParser(verbose)
     data = rp.GetParsedData(ip)
 
-    print('\n\n===============================================================\n\n')
+    print('\n\n')
+    printBannerPadding()
+    print('\n\n')
     print('[*] Tracing {0}'.format(ip))
     if output:
         output.write('================================================================\n\n')
