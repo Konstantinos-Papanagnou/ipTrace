@@ -1,5 +1,14 @@
 # ipTrace
 
+# New Features
+
+### Added support for mobile applications using Termux. Instead of displaying the map in the normal way, the script opens a SimpleHTTPServer and triggers the OS to open the link.
+#### Fixed some bugs with file locations. Installation script now installs itself in /bin directory instead of /sbin
+#### --visual mode now outputs a file as well. You need to supply the filename after the --visual argument like so 
+`./iptrace.py -i {your-domain} --visual {output_filename}`
+## Note: Installing the script over the installation script provided is not adviced on Termux!
+
+
 # Installation Tips
 ### Firefox required
 ### Linux
@@ -52,11 +61,11 @@ Everything is set! Now you can fire up the script.
 # Usage
 
 ```bash
-=========================================================
-             IP TRACE BY KONSTANTINOS PAP                
-         POWERED BY ip-api & whatismyipaddress.com       
-=========================================================
-usage: iptrace.py [-h] [-v] [-a] [--visual] [-o outputfile] (-l inputfile)/(-i ipaddr)
+**********************************************************************************************
+                                 IP TRACE BY KONSTANTINOS PAP
+                          POWERED BY ip-api & whatismyipaddress.com
+**********************************************************************************************
+usage: iptrace.py [-h] [-v] [-a] [-m] [--visual htmloutputfile] [-o outputfile] (-l inputfile)/(-i ipaddr)
 
 Automation script for ip lookup
 
@@ -66,13 +75,18 @@ optional arguments:
                         The ip address or domain name to examine
   -v, --verbose         Increase output verbosity
   -l LISTINPUT, --listinput LISTINPUT
-                        Input a list of addresses and/or domain names from an external file. The file must contain one ip address or domain name per line
+                        Input a list of addresses and/or domain names from an external file.
+                        The file must contain one ip address or domain name per line
   -o OUTPUT, --output OUTPUT
                         Output file to export data
-  -a, --accurate        The ip-api is not very accurate on it's geolocation traces so use the -a option to get more accurate results 
-                        from whatismyipaddress.com. whatismyipaddress strictly
-                        does not allow webscraping to their website so you will be prompted there automatically when using this option.
-  -V, --visual          Create Visual Map (Make a htmloutput.html file in the current directory and display it on firefox)
+  -a, --accurate        The ip-api is not very accurate on it\'s geolocation traces so use
+                        the -a option to get more accurate results from
+                        whatismyipaddress.com. whatismyipaddress strictly does not allow
+                        webscraping to their website so you will be prompted there
+                        automatically when using this option.
+  -V VISUAL, --visual VISUAL
+                        Create Visual Map and display it (Expects file location)
+  -m, --mobile          Using Termux for android support
 
 At least one of the -l or -i option must be declared!
 
@@ -100,13 +114,17 @@ whatismyipaddress.com does not allow webscraping to their results so instead of 
 python3 iptrace.py -l input.txt -a
 ```
 
-# New Feature!
 ####  You are now able to use --visual mode to create a Visual Map. This will create and open a htmloutput.html file that will contain all the ips that were successfully traced!
 ####  You can't use the -a option with --visual!
 ```bash
-python3 iptrace.py -l input.txt --visual
+python3 iptrace.py -l input.txt --visual output.html
 ```
 
 ## Map Example (Note that this can pin point multiple ips from a list)
 
 ![](Map.png)
+
+#### You can now run the script through Termux and automatically open the list in the default browser. In order to do that use the -m option.
+```bash
+python3 iptrace.py -i google.com --visual output.html -m
+```
