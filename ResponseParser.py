@@ -36,7 +36,7 @@ class ResponseParser:
 
 def Debug():
     rp = ResponseParser(True)
-    response = rp.GetParsedData('46.12.148.37')
+    response = rp.GetParsedData({your-ip})
     print(response)
 
 if __name__ == '__main__':
